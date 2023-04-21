@@ -16,6 +16,7 @@ const Home = () => {
                          file={file}
                          volume={volume}
                          setVolume={setVolume}
+                         setFile={setFile}
                     />
                ) : (
                     <FileInput setFile={setFile} />

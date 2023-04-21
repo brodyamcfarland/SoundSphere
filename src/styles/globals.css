@@ -27,13 +27,22 @@ body {
 }
 
 @layer components {
-     input[type="range"]::-webkit-slider-thumb {
+     .progress-bar::-webkit-slider-thumb {
           width: 12px;
           height: 12px;
           border: 1px solid #000000;
-          border-radius: 3px;
+          border-radius: 100px;
           cursor: pointer;
-          background: white;
+          background-color: #ffffff;
+          -webkit-appearance: none;
+     }
+     .volume-bar::-webkit-slider-thumb {
+          width: 12px;
+          height: 12px;
+          border: 1px solid #000000;
+          border-radius: 100px;
+          cursor: pointer;
+          background-color: white;
           -webkit-appearance: none;
      }
 }
