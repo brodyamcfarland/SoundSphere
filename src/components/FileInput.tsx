@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { TbArrowBigDownLines } from "react-icons/tb";
 
 interface StateProps {
@@ -46,6 +46,12 @@ const FileInput = ({ setFile }: StateProps) => {
                          type="file"
                          accept=".mp3,.wav"
                          className="absolute inset-0 w-full h-full opacity-0 z-10 rounded-full hover:cursor-pointer"
+                         onChange={(e) => {
+                              const file = e.target.files?.[0];
+                              if (file) {
+                                   setFile(file);
+                              }
+                         }}
                     />
 
                     <div className="flex flex-col items-center justify-center">
