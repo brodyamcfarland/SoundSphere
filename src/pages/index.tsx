@@ -1,16 +1,17 @@
 import AudioPlayer from "@/components/AudioPlayer";
 import FileInput from "@/components/FileInput";
 import Layout from "@/components/Layout";
-import { Howl } from "howler";
-import { useRef, useState } from "react";
+import VisualizerBackground from "@/components/VisualizerBackground";
+
+import { useState } from "react";
 
 const Home = () => {
      const [file, setFile] = useState<File | null>(null);
      const [volume, setVolume] = useState(0.5);
-     const soundRef = useRef<Howl>();
 
      return (
           <Layout title="SoundSphere | 3-D Audio Visualizer">
+               <VisualizerBackground />
                {file ? (
                     <AudioPlayer
                          file={file}

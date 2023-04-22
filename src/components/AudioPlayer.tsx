@@ -65,7 +65,7 @@ const AudioPlayer = ({ file, volume, setVolume, setFile }: FileProps) => {
      return (
           <>
                {!hide ? (
-                    <div className="absolute backdrop-blur-lg bg-white/5 flex-col top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex max-w-sm h-80 w-80 rounded-full md:max-w-xl border-2 items-center justify-center">
+                    <div className="absolute z-10 backdrop-blur-lg bg-white/5 flex-col top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex max-w-sm h-80 w-80 rounded-full md:max-w-xl border-2 items-center justify-center">
                          <span className="text-xs tracking-widest text-emerald-600 font-bold">
                               SONG
                          </span>
