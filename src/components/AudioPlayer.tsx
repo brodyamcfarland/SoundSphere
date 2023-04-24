@@ -21,33 +21,52 @@ const AudioPlayer = ({ file, volume, setVolume, setFile }: FileProps) => {
      const [isPlaying, setIsPlaying] = useState<boolean>(false);
      const [seek, setSeek] = useState<number>(0);
      const [hide, setHide] = useState<boolean>(false);
-     const soundRef = useRef<Howl>();
+     const audioRef = useRef<Howl>();
      const urlRef = useRef<string>();
+     const audioContext = useRef<AudioContext | null>(null);
+     const gainNode = useRef<GainNode | null>(null);
 
      useEffect(() => {
           if (file) {
                urlRef.current = URL.createObjectURL(file);
-               soundRef.current = new Howl({
+               audioRef.current = new Howl({
                     src: [urlRef.current],
+
                     format: ["mp3", "wav"],
                     onend: () => setIsPlaying(false),
+                    onload: () => {
+                         const analyser = Howler.ctx.createAnalyser();
+                         Howler.masterGain.connect(analyser);
+                         analyser.connect(Howler.ctx.destination);
+                         analyser.fftSize = 2048;
+                         const dataArray = new Float32Array(
+                              analyser.frequencyBinCount
+                         );
+                         analyser.getFloatFrequencyData(dataArray);
+                         const updateFrequencyData = () => {
+                              analyser.getFloatFrequencyData(dataArray);
+                              console.log(dataArray);
+                              requestAnimationFrame(updateFrequencyData);
+                         };
+                         requestAnimationFrame(updateFrequencyData);
+                    },
                });
           }
      }, [file]);
 
      const handlePlay = () => {
-          if (file && soundRef.current) {
-               soundRef.current.play();
+          if (file && audioRef.current) {
+               audioRef.current.play();
                setIsPlaying(true);
                setInterval(() => {
-                    setSeek(soundRef.current?.seek() || 0);
+                    setSeek(audioRef.current?.seek() || 0);
                }, 100);
           }
      };
 
      const handlePause = () => {
-          if (soundRef.current) {
-               soundRef.current.pause();
+          if (audioRef.current) {
+               audioRef.current.pause();
                setIsPlaying(false);
           }
      };
@@ -57,8 +76,8 @@ const AudioPlayer = ({ file, volume, setVolume, setFile }: FileProps) => {
      ) => {
           const value = parseFloat(event.target.value);
           setVolume(value);
-          if (soundRef.current) {
-               soundRef.current.volume(value);
+          if (audioRef.current) {
+               audioRef.current.volume(value);
           }
      };
 
@@ -76,7 +95,7 @@ const AudioPlayer = ({ file, volume, setVolume, setFile }: FileProps) => {
                                    name="progress"
                                    id="progress"
                                    min="0"
-                                   max={soundRef.current?.duration() || 0}
+                                   max={audioRef.current?.duration() || 0}
                                    step="0.01"
                                    value={seek}
                                    onChange={(e) => {
@@ -84,7 +103,7 @@ const AudioPlayer = ({ file, volume, setVolume, setFile }: FileProps) => {
                                              e.target.value
                                         );
                                         setSeek(value);
-                                        soundRef.current?.seek(value);
+                                        audioRef.current?.seek(value);
                                    }}
                                    className="w-full h-2 bg-white/50 rounded-lg appearance-none cursor-pointer dark:bg-blue-500/30 opacity-50 hover:opacity-100 duration-300 progress-bar"
                               />

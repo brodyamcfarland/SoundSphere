@@ -6,18 +6,6 @@ interface StateProps {
 }
 
 const FileInput = ({ setFile }: StateProps) => {
-     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-          const selectedFile = event.target.files?.[0];
-          if (
-               selectedFile &&
-               (selectedFile.type === "audio/mpeg" ||
-                    selectedFile.type === "audio/wav")
-          ) {
-               setFile(selectedFile);
-          }
-          // Add Toast or other error handling here
-     };
-
      const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
           event.preventDefault();
           event.dataTransfer.dropEffect = "copy";
