@@ -3,7 +3,7 @@ import { useRef } from "react";
 import * as THREE from "three";
 
 const NUM_BARS = 20;
-const CIRCLE_RADIUS = 50;
+const CIRCLE_RADIUS = 80;
 const ANGLE_INCREMENT = (Math.PI * 2) / NUM_BARS;
 
 interface FrequencyProps {

@@ -25,7 +25,7 @@ const FloorPlane = ({ volume, frequencyData, isPlaying }: FloorProps) => {
           <mesh
                ref={floorRef}
                rotation={[-Math.PI / 2, 0, 0]}
-               position={[0, -40, 0]}
+               position={[0, -10.5, 0]}
           >
                <planeGeometry args={[1000, 1000]} />
                <meshStandardMaterial color={"#000000"} />

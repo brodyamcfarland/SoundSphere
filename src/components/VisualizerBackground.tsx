@@ -3,6 +3,9 @@ import { Canvas } from "@react-three/fiber";
 import { useRef } from "react";
 import FloorPlane from "./FloorPlane";
 import FrequencyBars from "./FrequencyBars";
+import FrequencyRings from "./FrequencyRings";
+import FrequencyDiamonds from "./FrequencyDiamonds";
+import WaveformPlane from "./WaveformPlane";
 interface VisualizerProps {
      frequencyData: Float32Array | null;
      volume: number;
@@ -28,6 +31,9 @@ const VisualizerBackground = ({
                     volume={volume}
                     isPlaying={isPlaying}
                />
+               <FrequencyRings />
+               <FrequencyDiamonds />
+               <WaveformPlane frequencyData={frequencyData} />
                <pointLight position={[0, 1000, -2000]} />
                <pointLight position={[0, 1000, 2000]} />
                <pointLight
@@ -43,9 +49,9 @@ const VisualizerBackground = ({
                     count={3000}
                />
                <OrbitControls
+                    position={[0, 0, 0]}
                     autoRotate
                     autoRotateSpeed={0.2}
-                    enableZoom={false}
                />
           </Canvas>
      );
