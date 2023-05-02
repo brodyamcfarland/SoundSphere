@@ -4,7 +4,6 @@ import { useRef } from "react";
 import FloorPlane from "./FloorPlane";
 import FrequencyBars from "./FrequencyBars";
 import FrequencyRings from "./FrequencyRings";
-import FrequencyDiamonds from "./FrequencyDiamonds";
 import WaveformPlane from "./WaveformPlane";
 interface VisualizerProps {
      frequencyData: Float32Array | null;
@@ -31,8 +30,10 @@ const VisualizerBackground = ({
                     volume={volume}
                     isPlaying={isPlaying}
                />
-               <FrequencyRings />
-               <FrequencyDiamonds />
+               <FrequencyRings
+                    frequencyData={frequencyData}
+                    isPlaying={isPlaying}
+               />
                <WaveformPlane frequencyData={frequencyData} />
                <pointLight position={[0, 1000, -2000]} />
                <pointLight position={[0, 1000, 2000]} />

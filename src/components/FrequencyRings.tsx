@@ -1,34 +1,45 @@
-const FrequencyRings = () => {
+import { useFrame } from "@react-three/fiber";
+import { useRef } from "react";
+import { BufferAttribute, BufferGeometry, Mesh, TorusGeometry } from "three";
+
+interface RingProps {
+     frequencyData: Float32Array | null;
+     isPlaying: boolean;
+}
+
+const FrequencyRings = ({ frequencyData, isPlaying }: RingProps) => {
+     const ringRefs = useRef<Array<any>>([]);
+
+     useFrame(() => {
+          if (frequencyData && isPlaying) {
+               for (let i = 0; i < ringRefs.current.length; i++) {
+                    const ringFrequency = frequencyData[10 + i] || 10;
+                    const ringRef = ringRefs.current[i];
+                    ringRef.geometry.dispose();
+                    ringRef.geometry = new TorusGeometry(
+                         10 - ringFrequency - i * 10,
+                         1,
+                         10
+                    );
+               }
+          }
+     });
+
      return (
           <>
-               <mesh position={[0, 10, 0]} rotation={[Math.PI / 2, 0, 0]}>
-                    <torusGeometry args={[65, 1, 10]} />
-                    <meshPhongMaterial color={"#333333"} />
-               </mesh>
-               <mesh position={[0, 15, 0]} rotation={[Math.PI / 2, 0, 0]}>
-                    <torusGeometry args={[60, 1, 10]} />
-                    <meshPhongMaterial color={"#444444"} />
-               </mesh>
-               <mesh position={[0, 20, 0]} rotation={[Math.PI / 2, 0, 0]}>
-                    <torusGeometry args={[55, 1, 10]} />
-                    <meshPhongMaterial color={"#555555"} />
-               </mesh>
-               <mesh position={[0, 25, 0]} rotation={[Math.PI / 2, 0, 0]}>
-                    <torusGeometry args={[50, 1, 10]} />
-                    <meshPhongMaterial color={"#666666"} />
-               </mesh>
-               <mesh position={[0, 30, 0]} rotation={[Math.PI / 2, 0, 0]}>
-                    <torusGeometry args={[45, 1, 10]} />
-                    <meshPhongMaterial color={"#777777"} />
-               </mesh>
-               <mesh position={[0, 35, 0]} rotation={[Math.PI / 2, 0, 0]}>
-                    <torusGeometry args={[40, 1, 10]} />
-                    <meshPhongMaterial color={"#888888"} />
-               </mesh>
-               <mesh position={[0, 8, 0]}>
-                    <sphereGeometry args={[3, 100, 10]} />
-                    <meshPhongMaterial color={"red"} />
-               </mesh>
+               {Array.from({ length: 6 }).map((_, i) => (
+                    <mesh
+                         key={i}
+                         position={[0, 34 + i * 5, 0]}
+                         rotation={[Math.PI / 2, 0, 0]}
+                         ref={(ref) => (ringRefs.current[i] = ref)}
+                    >
+                         <torusGeometry args={[65 - i * 5, 1, 10]} />
+                         <meshPhongMaterial
+                              color={`#${i + 3}${i + 3}${i + 3}`}
+                         />
+                    </mesh>
+               ))}
           </>
      );
 };

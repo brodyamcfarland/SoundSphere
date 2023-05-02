@@ -11,12 +11,15 @@ const Header = () => {
      return (
           <header className="px-2 md:px-0 bg-gradient-to-b from-white/20 to-transparent py-4">
                <div className="container mx-auto flex justify-between items-center">
-                    <div className="flex items-center justify-center gap-2">
+                    <Link
+                         href="/"
+                         className="flex items-center justify-center gap-2"
+                    >
                          <GiStoneSphere size={27} />
                          <h1 className="font-semibold tracking-[5px] uppercase text-md select-none">
                               SoundSphere
                          </h1>
-                    </div>
+                    </Link>
                     <nav>
                          <ul className="flex scale-75 md:scale-100 space-x-2 md:space-x-4 text-white/80">
                               <li>
